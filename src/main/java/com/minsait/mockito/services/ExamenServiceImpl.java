@@ -6,7 +6,7 @@ import com.minsait.mockito.repositories.PreguntaRepository;
 
 import java.util.Optional;
 
-public class ExamenServiceImpl implements ExamenService{
+public class ExamenServiceImpl implements ExamenService {
 
     ExamenRepository examenRepository;
     PreguntaRepository preguntaRepository;
@@ -21,7 +21,7 @@ public class ExamenServiceImpl implements ExamenService{
     @Override
     public Examen findExamenPorNombreConPreguntas(String nombre) {
         Optional<Examen> examen = findExamenPorNombre(nombre);
-        if(examen.isPresent()){
+        if (examen.isPresent()) {
             examen.get().setPreguntas(
                     preguntaRepository.findPreguntaByExamenId(examen.get().getId())
             );
@@ -32,6 +32,10 @@ public class ExamenServiceImpl implements ExamenService{
 
     @Override
     public Examen save(Examen examen) {
-        return null;
+        if(!examen.getPreguntas().isEmpty()){
+            preguntaRepository.savePreguntas(examen.getPreguntas());
+        }
+        return examenRepository.save(examen);
     }
+
 }
