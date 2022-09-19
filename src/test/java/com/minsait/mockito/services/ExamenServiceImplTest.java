@@ -50,8 +50,9 @@ class ExamenServiceImplTest {
 
     @Test
     void testExamenSinPreguntas(){
+        when(examenRepository.save(Datos.EXAMEN)).thenReturn(Datos.EXAMEN);
         Examen examen = Datos.EXAMEN;
-        assertNull(service.save(examen));
+        assertEquals(service.save(examen).getId(),examen.getId());
     }
 
     @Test
